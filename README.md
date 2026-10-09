@@ -1,46 +1,50 @@
-# Fibonacci Algorithms Lab
+# Combinatorics Toolkit
 
-The original notebook printed a Fibonacci series. This lab implements
-**five** algorithms, benchmarks them head-to-head, visualizes golden-ratio
-convergence, and applies the math to Fibonacci retracement.
+An upgrade of the original "factorial of a number" notebook into a full
+combinatorics library: factorials (four algorithms), permutations,
+combinations, Stirling numbers of the second kind, Bell numbers,
+derangements, multinomial coefficients, trailing zeros, and the Gamma
+extension of factorial to non-integers.
 
-## Algorithms (`fibonacci.py`)
+## Features
 
-- `fib_naive` — textbook tree recursion, O(phi^n). Kept as a cautionary tale.
-- `fib_memoized` — top-down DP, O(n)
-- `fib_iterative` — bottom-up loop, O(n) time / O(1) space
-- `fib_matrix` — exponentiation of [[1,1],[1,0]], O(log n), exact at any n
-- `fib_binet` — closed form, O(1), exact only to n ~ 70 (float precision)
+- `combinatorics.py` — the library:
+  - `factorial(n, method=...)` with `iterative`, `memoized`, `prime`
+    (Legendre prime-factorization), `stdlib`, `auto`
+  - `permutations(n, r)`, `combinations(n, r)` (overflow-safe
+    multiplicative formula)
+  - `stirling2(n, k)`, `bell_number(n)`, `derangements(n)`,
+    `multinomial(n, groups)`, `trailing_zeros(n)`
+  - `gamma_factorial(x)` — factorial for non-integers via Gamma(x+1)
+- `benchmark.py` — shootout of the four factorial algorithms with
+  `timeit` (best of 5)
+- `growth_chart.py` — matplotlib log-scale chart of n!, central
+  binomial coefficients, and Bell numbers (`growth_rates.png`)
+- `examples.py` — real probability problems: poker hands, 6/49
+  lottery odds, committee selection, the hat-check problem,
+  password-space counting
 
 ## How to run
 
 ```bash
-pip install -r requirements.txt   # only matplotlib
-python benchmark.py               # timing shootout (small n and large n)
-python golden_ratio.py            # writes golden_ratio.png
-python retracement.py             # retracement/extension price levels
+pip install -r requirements.txt   # only matplotlib, for the chart
+python examples.py                # probability examples
+python benchmark.py               # algorithm timings
+python growth_chart.py            # writes growth_rates.png
 ```
 
 ```python
-from fibonacci import fib
-fib(1000, method="matrix")   # exact, instant
-fib(30, method="naive")      # exact, ~1M recursive calls — feel the pain
+from combinatorics import combinations, stirling2
+combinations(52, 5)   # 2598960 possible poker hands
+stirling2(10, 3)      # 9330 ways to split 10 items into 3 groups
 ```
 
-## Files
-
-- `fibonacci.py` — the five implementations + `golden_ratio_approximations`
-- `benchmark.py` — `timeit` comparison; verifies exactness across methods
-- `golden_ratio.py` — matplotlib plot of F(n+1)/F(n) -> phi
-- `retracement.py` — Fibonacci retracement/extension demo (educational,
-  not financial advice)
-- `complexity.md` — written complexity analysis and key insights
-
-## Sample output
+## Examples
 
 ```
-Small n (all methods incl. naive recursion):
-  n= 30: naive=  154.321ms  memoized=   0.004ms  iterative=   0.003ms  matrix=   0.006ms  binet=   0.001ms
-Large n (naive excluded — it would never finish):
-  n=100,000: memoized=  42.1ms  iterative=  38.9ms  matrix=   5.2ms
+P(exactly 2 aces in poker hand) = 0.039930
+P(6/49 lottery jackpot)         = 1 in 13,983,816
+3-person committees from 10     = 120
+P(nobody gets own hat, n=10)    = 0.367879 (1/e = 0.367879)
+8-char alphanumeric passwords   = 218,340,105,584,896
 ```
