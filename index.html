@@ -61,6 +61,8 @@ footer{margin-top:56px;color:var(--mut);font-size:13px;text-align:center}
 .reveal{opacity:0;transform:translateY(18px);transition:opacity .6s,transform .6s}
 .reveal.on{opacity:1;transform:none}
 </style>
+<meta property="og:image" content="https://factorial-of-numbers.vercel.app/og.png">
+<meta name="twitter:image" content="https://factorial-of-numbers.vercel.app/og.png">
 </head>
 <body>
 <div class="wrap">
@@ -91,7 +93,8 @@ footer{margin-top:56px;color:var(--mut);font-size:13px;text-align:center}
 <a href="https://github.com/HVRGAMING2705/Factorial-of-Numbers/blob/main/combinatorics.py">combinatorics.py</a>
 <a href="https://github.com/HVRGAMING2705/Factorial-of-Numbers/blob/main/benchmark.py">benchmark.py</a>
 </div>
-<footer>Built by Vikranth Reddy · Combinatorics Toolkit</footer>
+<footer>Built by Vikranth Reddy · Combinatorics Toolkit<span class="fleet-legal" style="display:block;text-align:center;padding:10px 0;font-size:13px"><a href="/legal.html">Privacy · Terms</a></span>
+</footer>
 </div>
 <script>
 function fact(n){let r=1n;for(let i=2n;i<=n;i++)r*=i;return r}
@@ -107,5 +110,6 @@ calcNPR();calcNCR();calcFact();calcDer();
 const io=new IntersectionObserver(e=>e.forEach(x=>x.isIntersecting&&x.target.classList.add('on')),{threshold:.1});
 document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 </script>
+<script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>
